@@ -9,11 +9,20 @@ class my_test extends uvm_test;
     endfunction: new
 
     function void build_phase(uvm_phase phase);
-        dut_config_0 = my_dut_config::type_id::create("dut_config_0", this);
+        super.build_phase(phase);
+        dut_config_0 = my_dut_config::type_id::create("dut_config_0");
         my_env_h = my_env::type_id::create("my_env", this);
-        
+
         if(!uvm_config_db #(virtual fifo_if)::get(this, "","vif", dut_config_0.vif))
-            `uvm_fatal("MY_TEST", "No VIF");
+            `uvm_fatal("MY_TEST", "No VIF")
         uvm_config_db #(my_dut_config)::set(this, "*", "dut_config", dut_config_0);
     endfunction: build_phase
+
+    task run_phase(uvm_phase phase);
+        my_sequence seq;
+        seq = my_sequence::type_id::create("seq");
+        phase.raise_objection(this);
+        seq.start(my_env_h.my_agent_h.my_sequencer_h);
+        phase.drop_objection(this);
+    endtask
 endclass

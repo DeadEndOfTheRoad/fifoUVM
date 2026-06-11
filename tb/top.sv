@@ -13,9 +13,9 @@ module top;
 
     initial begin
         vif.rstn = 1;
-        #1;
+        #3;
         vif.rstn = 0;
-        #1;
+        #3;
         vif.rstn = 1;
     end
 

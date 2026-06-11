@@ -6,3 +6,5 @@ modelsim.ini
 .project
 transcript.txt
 vsim.wlf
+tr_db.log
+vsim_stacktrace.vstf

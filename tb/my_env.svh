@@ -1,19 +1,16 @@
 class my_env extends uvm_env;
     `uvm_component_utils(my_env)
 
+    my_agent my_agent_h;
+
     function new(string name, uvm_component parent);
         super.new(name, parent);
     endfunction: new
 
 
     function void build_phase(uvm_phase phase);
-
+        super.build_phase(phase);
+        my_agent_h = my_agent::type_id::create("my_driver", this);
     endfunction: build_phase
 
-
-    task run_phase(uvm_phase phase);
-        phase.raise_objection(this);
-        #30;
-        phase.drop_objection(this);
-    endtask: run_phase
 endclass
