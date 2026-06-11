@@ -1,3 +1,7 @@
+work/
 .settings/
+
+modelsim.ini
 .library_mapping.xml
 .project
+transcript.txt
