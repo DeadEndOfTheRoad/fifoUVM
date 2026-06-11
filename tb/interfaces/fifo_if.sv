@@ -9,8 +9,5 @@ interface fifo_if;
     logic almost_full; // count == DEPTH-1 
     logic almost_empty; // count == 1 
     logic [$clog2(DEPTH):0] count;
-
-
-    
     
 endinterface : fifo_if

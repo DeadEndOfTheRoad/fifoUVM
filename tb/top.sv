@@ -1,5 +1,6 @@
 module top;
     
+    import uvm_pkg::*;
     import my_pkg::*;
     import parameter_pkg::*;
 
@@ -8,6 +9,14 @@ module top;
     initial begin
         vif.clk = 0;
         forever #5 vif.clk = ~vif.clk;
+    end
+
+    initial begin
+        vif.rstn = 1;
+        #1;
+        vif.rstn = 0;
+        #1;
+        vif.rstn = 1;
     end
 
     fifo #(
@@ -48,77 +57,8 @@ module top;
     );
 
     initial begin
-        vif.rstn = 0;
-        vif.wr_en = 0;
-        vif.rd_en = 0;
-        #2 vif.rstn = 1;
-
-        @(negedge vif.clk);
-        vif.wr_en = 1; 
-        vif.rd_en = 0; 
-        vif.wr_data = 32'h00000000;
-        
-        @(negedge vif.clk);
-        vif.wr_en = 1; 
-        vif.rd_en = 0;
-        vif.wr_data = 32'hAAAAAAAA;
-
-        @(negedge vif.clk);
-        vif.wr_en = 1;
-        vif.rd_en = 1; 
-        vif.wr_data = 32'hBBBBBBBB;
-
-        @(negedge vif.clk);
-        vif.wr_en = 1;
-        vif.rd_en = 1; 
-        vif.wr_data = 32'hCCCCCCCC;
-        
-        @(negedge vif.clk);
-        vif.wr_en = 1;
-        vif.rd_en = 1; 
-        vif.wr_data = 32'hDDDDDDDD;
-        
-        @(negedge vif.clk);
-        vif.wr_en = 1;
-        vif.rd_en = 1; 
-        vif.wr_data = 32'hEEEEEEEE;
-        
-        @(negedge vif.clk);
-        vif.wr_en = 1;
-        vif.rd_en = 1; 
-        vif.wr_data = 32'hFFFFFFFF;
-        
-        @(negedge vif.clk);
-        vif.wr_en = 1;
-        vif.rd_en = 0; 
-        vif.wr_data = 32'h11111111;
-        
-        for (int i = 0; i < 3; i++) begin
-            @(negedge vif.clk);
-            vif.wr_en = 0;
-            vif.rd_en = 1; 
-        end
-
-        for (int i = 0; i < 8; i++) begin
-            @(negedge vif.clk);
-            vif.wr_en = 1;
-            vif.rd_en = 0;
-            vif.wr_data = 32'h11111111 * i;
-        end
-
-        for (int i = 0; i < 8; i++) begin
-            @(negedge vif.clk);
-            vif.wr_en = 0;
-            vif.rd_en = 1;
-        end
-
-        @(negedge vif.clk);
-        vif.wr_en = 0;
-        vif.rd_en = 0;
-
-        #20;
-
-        $stop;
+        uvm_config_db #(virtual fifo_if)::set(null, "uvm_test_top", "vif", vif);
+        run_test("my_test");
     end
 
 endmodule

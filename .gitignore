@@ -5,3 +5,4 @@ modelsim.ini
 .library_mapping.xml
 .project
 transcript.txt
+vsim.wlf
