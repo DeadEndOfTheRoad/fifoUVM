@@ -6,6 +6,7 @@ class my_transaction extends uvm_sequence_item;
     rand logic [WIDTH-1:0] wr_data;
     
     logic [WIDTH-1:0] rd_data;
+    logic full, empty;
 
     function new(string name = "");
         super.new(name);
