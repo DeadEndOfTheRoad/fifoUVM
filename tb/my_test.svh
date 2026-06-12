@@ -3,6 +3,7 @@ class my_test extends uvm_test;
     
     my_env my_env_h;
     my_dut_config dut_config_0;
+    
 
     function new(string name, uvm_component parent);
         super.new(name, parent);
@@ -19,8 +20,9 @@ class my_test extends uvm_test;
     endfunction: build_phase
 
     task run_phase(uvm_phase phase);
-        my_sequence seq;
-        seq = my_sequence::type_id::create("seq");
+        seq_of_commands seq;
+        seq = seq_of_commands::type_id::create("seq");
+        assert(seq.randomize());
         phase.raise_objection(this);
         seq.start(my_env_h.my_agent_h.my_sequencer_h);
         phase.drop_objection(this);

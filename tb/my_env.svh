@@ -10,7 +10,7 @@ class my_env extends uvm_env;
 
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);
-        my_agent_h = my_agent::type_id::create("my_driver", this);
+        my_agent_h = my_agent::type_id::create("my_agent", this);
     endfunction: build_phase
 
 endclass

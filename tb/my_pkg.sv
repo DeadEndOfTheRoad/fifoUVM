@@ -9,6 +9,7 @@ package my_pkg;
     `include "my_transaction.svh"
     typedef uvm_sequencer #(my_transaction) my_sequencer;
     `include "my_sequence.svh"
+    `include "seq_of_commands.svh"
     `include "my_driver.svh"
     `include "my_agent.svh"
     `include "my_env.svh"
